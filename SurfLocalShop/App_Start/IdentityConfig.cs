@@ -134,8 +134,8 @@ namespace SurfLocalShop
             var userManager =
              HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var roleManager = HttpContext.Current.GetOwinContext().Get<ApplicationRoleManager>();
-            const string name = "admin@mvcbabystore.com";
-            const string password = "Adm1n@mvcbabystore.com";
+            const string name = "admin@surflocal.com";
+            const string password = "Password1";
             const string roleName = "Admin";
 
             //Create Role Admin if it does not exist
