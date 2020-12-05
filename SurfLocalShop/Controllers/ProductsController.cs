@@ -139,7 +139,7 @@ namespace SurfLocalShop.Controllers
             if (ModelState.IsValid)
             {
                 db.Products.Add(product);
-                db.SaveChanges();
+                var result = db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
