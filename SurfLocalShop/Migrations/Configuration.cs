@@ -10,7 +10,6 @@ namespace SurfLocalShop.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "SurfLocalShop.Models.ApplicationDbContext";
         }
 
         protected override void Seed(SurfLocalShop.Models.ApplicationDbContext context)

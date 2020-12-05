@@ -190,16 +190,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202012050737438_InitialCreate.cs" />
-    <Compile Include="Migrations\202012050737438_InitialCreate.Designer.cs">
-      <DependentUpon>202012050737438_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202012050831332_contextreset.cs" />
-    <Compile Include="Migrations\202012050831332_contextreset.Designer.cs">
-      <DependentUpon>202012050831332_contextreset.cs</DependentUpon>
+    <Compile Include="Migrations\202012051005435_initial_create.cs" />
+    <Compile Include="Migrations\202012051005435_initial_create.Designer.cs">
+      <DependentUpon>202012051005435_initial_create.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Migrations\StoreConfiguration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Basket.cs" />
@@ -336,11 +331,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202012050737438_InitialCreate.resx">
-      <DependentUpon>202012050737438_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202012050831332_contextreset.resx">
-      <DependentUpon>202012050831332_contextreset.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202012051005435_initial_create.resx">
+      <DependentUpon>202012051005435_initial_create.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
