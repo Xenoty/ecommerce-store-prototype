@@ -5,15 +5,135 @@
     ViewBag.Title = "Products";
 }
 
+<style>
+   /* .page-background{
+        z-index: -1;
+        width:100%;
+        height: 
+    }*/
+
+    h2 {
+        text-align: center;
+        color: var(--primary);
+        margin-bottom: 5vh;
+        margin-top: 5vh;
+        font-size: 2.3rem;
+    }
+
+    .admin {
+        display: block;
+        overflow: auto;
+        text-align: center;
+        margin-top: 1rem;
+    }
+
+    svg {
+        max-width: 19px;
+    }
+
+        svg path {
+            fill: white;
+        }
+
+    #edit:hover path {
+        fill: green;
+    }
+
+    #trash-can {
+        max-width: 15px;
+    }
+
+    #trash-can:hover path {
+        fill: red;
+    }
+
+    .admin a {
+        text-decoration: none;
+    }
+
+    .products-wrapper {
+        margin-bottom: 3rem;
+        margin-top: 3rem;
+    }
+
+    .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 200px));
+        grid-gap: 3rem;
+    }
+
+    .product-card {
+        background-color: white;
+        padding: 1rem;
+       /* height: fit-content;*/
+    }
+
+    .product-card a{
+        text-decoration:none;
+    }
+
+    .product-card .image {
+        margin-bottom: 1rem;
+        /* margin: auto; */
+        min-height: 230px;
+        max-height: 230px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .product-card .image img{
+   /*     max-width: 60px;*/
+        width:100%;
+/*        height:100%;*/
+        display:block;
+        margin:auto;
+    }
+
+    .product-content {
+        padding: 0px 2rem;
+        margin-bottom: 1.1rem;
+    }
+
+    .product-content *{
+        color:var(--grey);
+    }
+
+    .product-content .Name{
+        text-align:left;
+        font-family:Poppins-SemiBold;
+        font-size:16px;
+    }
+
+    .product-card .description{
+        font-size: 14px;
+        line-height:14px;
+        max-height:30px;
+        overflow:hidden;
+    }
+
+    .product-card .price {
+        text-align: right;
+        font-size: 16px;
+        font-family: Poppins-SemiBold;
+        color: var(--primary);
+    }
+
+</style>
+
+<div class="page-background">
+
+</div>
+
 <h2> Local Brand, High Quality </h2>
+
 <p>
     @(String.IsNullOrWhiteSpace(Model.Search) ? "Showing all" : "You search for " + Model.Search + " found")  @Model.Products.TotalItemCount products
 </p>
 
 <p>
-    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+    @if (Request.IsAuthenticated && User.IsInRole("Admin")) 
     {
-        @Html.ActionLink("Create New", "Create")
+        @Html.ActionLink("Create New", "Create", "Products", null, new { @class = "btn btn-success" })
     }
     @using (Html.BeginRouteForm("ProductsIndex", FormMethod.Get))
     {
@@ -25,7 +145,80 @@
         <input type="hidden" name="Search" id="Search" value="@Model.Search" />
     }
 </p>
-<table class="table">
+
+<div class="products-wrapper">
+    <div class="products-grid">
+        @foreach (var item in Model.Products)
+        {
+            //var autofit = false;
+            //if (item.Category.Name.ToString() == "Fins" || item.Category.Name.ToString() == "Leashes")
+            //{
+            //    autofit = true;
+            //}
+            <div class="product-card box-shadow">
+            @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <div class="admin">
+                            <a href="@Url.Action("", "Edit", new { id = item.ID})">
+                                <svg id="edit" xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 27.067 27.067">
+                                    <g id="Group_29" data-name="Group 29" transform="translate(0 1.933)">
+                                        <g id="Group_28" data-name="Group 28">
+                                            <path id="Path_101" data-name="Path 101" d="M22.233,45.737a.967.967,0,0,0-.967.967V56.37a.967.967,0,0,1-.967.967H2.9a.967.967,0,0,1-.967-.967V37.037A.967.967,0,0,1,2.9,36.07H14.5a.967.967,0,1,0,0-1.933H2.9a2.9,2.9,0,0,0-2.9,2.9V56.37a2.9,2.9,0,0,0,2.9,2.9H20.3a2.9,2.9,0,0,0,2.9-2.9V46.7A.967.967,0,0,0,22.233,45.737Z" transform="translate(0 -34.137)" fill="#d1dbff" />
+                                        </g>
+                                    </g>
+                                    <g id="Group_31" data-name="Group 31" transform="translate(5.8)">
+                                        <g id="Group_30" data-name="Group 30">
+                                            <path id="Path_102" data-name="Path 102" d="M122.591,1.088a3.7,3.7,0,0,0-5.234,0L104.625,13.82a.977.977,0,0,0-.233.378L102.458,20a.967.967,0,0,0,.916,1.272.982.982,0,0,0,.305-.049l5.8-1.933a.967.967,0,0,0,.378-.234L122.591,6.321A3.7,3.7,0,0,0,122.591,1.088Z" transform="translate(-102.409 -0.004)" fill="#d1dbff" />
+                                        </g>
+                                    </g>
+                                </svg>
+                            </a>
+                            <a href="@Url.Action("", "Delete", new { id = item.ID})">
+                                <svg id="trash-can" xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 20.968 31.039">
+                                    <g transform="translate(-83.057)">
+                                        <path id="XMLID_1089_" d="M103.988,93.243l-.677-2.029a1,1,0,0,0-.949-.684H84.72a1,1,0,0,0-.949.684l-.677,2.029a.71.71,0,0,0,.673.934h19.548A.71.71,0,0,0,103.988,93.243Z" transform="translate(0 -85.043)" fill="#ffd1d1" />
+                                        <path id="XMLID_835_" d="M103.145,199.548a1.379,1.379,0,0,0,1.37,1.227h11.744a1.379,1.379,0,0,0,1.37-1.227l2.1-18.858H101.05Z" transform="translate(-16.902 -169.736)" fill="#ffd1d1" />
+                                        <path id="XMLID_831_" d="M197.709,2.607a.789.789,0,0,1,.788-.788h2.679a.789.789,0,0,1,.788.788V3.67h1.819V2.607A2.61,2.61,0,0,0,201.175,0H198.5a2.61,2.61,0,0,0-2.607,2.607V3.67h1.819Z" transform="translate(-105.993)" fill="#ffd1d1" />
+                                    </g>
+                                </svg>
+                            </a>
+
+                        </div>
+                    }
+
+                <a href="@Url.Action("Details", new { id = item.ID})">
+                    <div class="image">
+                        @if (item.ProductImageMappings != null && item.ProductImageMappings.Any())
+                        {
+                            @*<a href="@Url.Action("Details", new { id = item.ID})">*@
+                                <img src="@(Url.Content(Constants.ProductImagePath) + item.ProductImageMappings.OrderBy(pim => pim.ImageNumber).ElementAt(0).ProductImage.FileName)">
+                            @*</a>*@
+                        }
+                    </div>
+                    <div class="product-content">
+                        <div class="Name">
+                            @item.Name
+                        </div>
+                        <div class="description">
+                            @item.Description
+                        </div>                        
+                    </div>
+                    <div class="price">
+                            @item.Price
+                        </div>
+                    
+                </a>             
+            </div>
+        }
+    </div>
+</div>
+
+<div>
+    Page @(Model.Products.PageCount < Model.Products.PageNumber ? 0 : Model.Products.PageNumber) of @Model.Products.PageCount
+    @Html.PagedListPager(Model.Products, page => Url.Action("Index", new { category = @Model.Category, Search = @Model.Search, sortBy = @Model.SortBy, page }))
+</div>
+
+@*<table class="table">
     <tr>
         <th></th>
         <th>
@@ -77,9 +270,6 @@
     </tr>
 }
 
-</table>
-<div>
-    Page @(Model.Products.PageCount < Model.Products.PageNumber ? 0 : Model.Products.PageNumber) of @Model.Products.PageCount
-    @Html.PagedListPager(Model.Products, page => Url.Action("Index", new { category = @Model.Category, Search = @Model.Search, sortBy = @Model.SortBy, page}))
-</div>
+</table>*@
+
 

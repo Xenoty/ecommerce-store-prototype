@@ -13,6 +13,7 @@
 :root {
     --primary: #3AAB98;
     --secondary: #7A97FF;
+    --grey: #707070;
 }
 
 * {
