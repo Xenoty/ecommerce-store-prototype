@@ -14,8 +14,8 @@ namespace SurfLocalShop.ViewModels
         public string Name { get; set; }
 
         [Required(ErrorMessage = "The product description cannot be blank")]
-        [StringLength(300, MinimumLength = 10, ErrorMessage = "Please enter a product description between 10 and 200 characters in length")]
-        [RegularExpression(@"^['"".,;a-zA-Z0-9'-'\s]*$", ErrorMessage = "Please enter a product description made up of letters and numbers only")]
+        [StringLength(200, MinimumLength = 10, ErrorMessage = "Please enter a product description between 10 and 200 characters in length")]
+        [RegularExpression(@"^['"",;a-zA-Z0-9'-'\s]*$", ErrorMessage = "Please enter a product description made up of letters and numbers only")]
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
