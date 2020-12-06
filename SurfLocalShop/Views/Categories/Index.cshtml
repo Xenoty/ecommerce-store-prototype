@@ -4,7 +4,73 @@
     ViewBag.Title = "Categories";
 }
 
-<h2>@ViewBag.Title</h2>
+<style>
+    h2 {
+        text-align: center;
+        color: var(--primary);
+        margin-bottom: 5vh;
+        margin-top: 5vh;
+        font-size: 2.3rem;
+    }
+
+    .categories-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 200px));
+        grid-gap: 3rem;
+    }
+
+    .category-item {
+        position: relative;
+        background-color: var(--primary);
+        padding: 3rem 2rem;
+        text-align: center;
+    }
+
+    .admin {
+        width: fit-content;
+        text-align: center;
+    }
+
+    .category-item a {
+        text-align: center;
+        color: white;
+        font-size: 20px;
+    }
+
+    .category-help{
+        margin-top:10vh;
+    }
+
+    .category-help h2{
+        margin-bottom: 1vh;
+        color:#707070;
+    }
+
+    .help-container {
+        height: 350px;
+        width: 100%;
+        position: relative;
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+            url(/Content/Marketing/images/carrying_surfboards.jpg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+
+    .text-center {
+        margin-bottom: 3vh;
+        color: white;
+        font-size: 1.8rem;
+    }
+
+    .absolute-center {
+        text-align: center;
+    }
+
+</style>
+
+<h2>Looking for something? We got you covered.</h2>
 
 @if (Request.IsAuthenticated && User.IsInRole("Admin"))
 {
@@ -12,28 +78,38 @@
         @Html.ActionLink("Create New", "Create")
     </p>
 }
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink(item.Name, "Index", "Products", new { category = item.Name }, null)
-        </td>
-        <td>
-            @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+<div class="grid-wrapper">
+    <div class="categories-grid">
+     
+            @foreach (var item in Model)
             {
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID })
-                @Html.Raw(" | ")
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                <div class="category-item">
+                    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <div class="admin">
+                            @Html.ActionLink("Edit", "Edit", new { id = item.ID })
+                            @Html.Raw(" | ")
+                            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                        </div>
+                    }
+                <a href="@Url.Action("Index", "Products", new { category = item.Name }, null)">
+                    @item.Name
+                </a>
+            </div>
             }
-        </td>
-    </tr>
-}
+      
+    </div>
+</div>
 
-</table>
+<div class="category-help">
+    <h2>Couldn't find what you are looking for?</h2>
+
+    <div class="help-container">
+        <div class="absolute-center">
+            <p class="text-center">Try looking for it in our shop, or <br /> giving us a call +27 12 345 6789</p>
+            <a href="@Url.Action("Index","Products")" class="cta box-shadow">Shop Now</a>
+        </div>
+    </div>
+</div>
+

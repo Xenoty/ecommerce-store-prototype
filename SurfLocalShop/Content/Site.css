@@ -50,6 +50,21 @@ textarea {
    height:100vh;
 }
 
+.cta {
+    background-color: var(--primary);
+    color: white;
+    font-size: 26px;
+    padding: 1rem 4rem;
+    cursor: pointer;
+}
+
 .box-shadow {
     box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.2);
+}
+
+.absolute-center{
+    position:absolute;
+    left:50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
