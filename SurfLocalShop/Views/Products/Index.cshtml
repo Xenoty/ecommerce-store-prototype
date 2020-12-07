@@ -21,10 +21,12 @@
     }
 
     .admin {
-        display: block;
         overflow: auto;
-        text-align: center;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
         margin-top: 1rem;
+        margin-bottom: 1rem;
     }
 
     svg {
@@ -32,7 +34,7 @@
     }
 
         svg path {
-            fill: white;
+            fill: var(--grey);
         }
 
     #edit:hover path {
@@ -150,16 +152,11 @@
     <div class="products-grid">
         @foreach (var item in Model.Products)
         {
-            //var autofit = false;
-            //if (item.Category.Name.ToString() == "Fins" || item.Category.Name.ToString() == "Leashes")
-            //{
-            //    autofit = true;
-            //}
             <div class="product-card box-shadow">
             @if (Request.IsAuthenticated && User.IsInRole("Admin"))
                     {
                         <div class="admin">
-                            <a href="@Url.Action("", "Edit", new { id = item.ID})">
+                            <a href="@Url.Action("Edit", "Products", new { id = item.ID})">
                                 <svg id="edit" xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 27.067 27.067">
                                     <g id="Group_29" data-name="Group 29" transform="translate(0 1.933)">
                                         <g id="Group_28" data-name="Group 28">
@@ -173,7 +170,7 @@
                                     </g>
                                 </svg>
                             </a>
-                            <a href="@Url.Action("", "Delete", new { id = item.ID})">
+                            <a href="@Url.Action("Delete", "Products", new { id = item.ID})">
                                 <svg id="trash-can" xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 20.968 31.039">
                                     <g transform="translate(-83.057)">
                                         <path id="XMLID_1089_" d="M103.988,93.243l-.677-2.029a1,1,0,0,0-.949-.684H84.72a1,1,0,0,0-.949.684l-.677,2.029a.71.71,0,0,0,.673.934h19.548A.71.71,0,0,0,103.988,93.243Z" transform="translate(0 -85.043)" fill="#ffd1d1" />
