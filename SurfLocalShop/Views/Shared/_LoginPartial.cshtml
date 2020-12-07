@@ -1,22 +1,52 @@
 ﻿@using Microsoft.AspNet.Identity
+
+<style>
+    .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+        background-color: var(--primaryDarker) !important;
+    }
+
+    .dropdown-menu{
+        background-color: var(--primaryDarker) !important;
+    }
+
+    .dropdown-menu > li > a{
+        color: white !important;
+    }
+
+    .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus{
+        background-color: var(--primary) !important;
+    }
+</style>
+
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
     @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
+<ul class="nav navbar-nav navbar-right">
+    <li class="dropdown" style="line-height:1.5;margin:auto;">
+        <a href="#" style="text-decoration:none !important;color:rgba(0,0,0,.7);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> @User.Identity.Name <span class="caret"></span></a>
+        <ul class="dropdown-menu" style=" background-color: #d1dbff; border: none; box-shadow: 0px 0px 3px 1px rgba(0,0,0,.2);">
+            <li>
+                <a href="@Url.Action("Index", "Orders")">Orders</a>
+                <a href="@Url.Action("Index", "Manage")">Manage</a>
+                @*<a style="color: rgb(0,0,0,.7);" asp-controller="Account" asp-action="Logout">Logout</a>*@
+                <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+            </li>
+        </ul>
+    </li>
+    @*<li>
+        @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+    </li>
+    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>*@
+</ul>
     }
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li>@Html.ActionLink("Register", "Register", "Account", new { ReturnUrl = Context.Request.Path }, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", new { ReturnUrl = Context.Request.Path }, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
 }
