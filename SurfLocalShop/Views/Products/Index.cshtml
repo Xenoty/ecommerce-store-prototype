@@ -6,11 +6,6 @@
 }
 
 <style>
-   /* .page-background{
-        z-index: -1;
-        width:100%; 
-        height: 
-    }*/
     body {
         background-color: #F9F9F9 !important;
     }
@@ -25,7 +20,7 @@
 
     .products-wrapper {
         margin-bottom: 3rem;
-        margin-top: 3rem;
+        /*margin-top: 3rem;*/
     }
 
     .products-grid {
@@ -90,35 +85,48 @@
         color: var(--primary);
     }
 
+    .filter {
+        background-color: var(--primary);
+        border: none;
+        padding: 3px 1.1rem;
+        border-radius: 5px;
+        color: white;
+        margin-left: 1rem;
+        font-size: 16px;
+    }
+
+    .select-list {
+        padding-left: 5px;
+        margin-left: 5px;
+    }
+
 </style>
 
-<div class="page-background">
-
-</div>
 
 <h2> Local Brand, High Quality </h2>
 
-<p>
-    @(String.IsNullOrWhiteSpace(Model.Search) ? "Showing all" : "You search for " + Model.Search + " found")  @Model.Products.TotalItemCount products
-</p>
 
-<p>
-    @if (Request.IsAuthenticated && User.IsInRole("Admin")) 
-    {
-        @Html.ActionLink("Create New", "Create", "Products", null, new { @class = "btn btn-success" })
-    }
-    @using (Html.BeginRouteForm("ProductsIndex", FormMethod.Get))
-    {
-        <label>Filter by category:</label>
-        @Html.DropDownListFor(vm => vm.Category, Model.CatFilterItems, "All");
-        <label>Sort by:</label>
-        @Html.DropDownListFor(vm => vm.SortBy, new SelectList(Model.Sorts, "Value", "Key"), "Default")
-        <input type="submit" value="Filter" />
-        <input type="hidden" name="Search" id="Search" value="@Model.Search" />
-    }
-</p>
+@if (Request.IsAuthenticated && User.IsInRole("Admin")) 
+{
+    @Html.ActionLink("Create New", "Create", "Products", null, new { @class = "btn btn-success" })
+}
+@using (Html.BeginRouteForm("ProductsIndex", FormMethod.Get))
+{
+    <label>Filter by category:</label>
+    @Html.DropDownListFor(vm => vm.Category, Model.CatFilterItems, "All", new {@class = "select-list"});
+    <label>Sort by:</label>
+    @Html.DropDownListFor(vm => vm.SortBy, new SelectList(Model.Sorts, "Value", "Key"), "Default", new { @class = "select-list" })
+    <input type="submit" value="Filter" name="filter" class="filter"/>
+    @*<input type="submit" value="Clear" name="filter" class="filter" style="background-color:#999999"/>*@
+    <input type="hidden" name="Search" id="Search" value="@Model.Search" />
+}
+
 
 <div class="products-wrapper">
+    <p style="text-align:left; margin-bottom:0px;">
+        @(String.IsNullOrWhiteSpace(Model.Search) ? "Showing all" : "You search for " + Model.Search + " found")  @Model.Products.TotalItemCount products
+    </p>
+
     <div class="products-grid">
         @foreach (var item in Model.Products)
         {
@@ -158,7 +166,7 @@
                         @if (item.ProductImageMappings != null && item.ProductImageMappings.Any())
                         {
                             @*<a href="@Url.Action("Details", new { id = item.ID})">*@
-                                <img src="@(Url.Content(Constants.ProductImagePath) + item.ProductImageMappings.OrderBy(pim => pim.ImageNumber).ElementAt(0).ProductImage.FileName)">
+                            <img src="@(Url.Content(Constants.ProductImagePath) + item.ProductImageMappings.OrderBy(pim => pim.ImageNumber).ElementAt(0).ProductImage.FileName)">
                             @*</a>*@
                         }
                     </div>
@@ -168,13 +176,13 @@
                         </div>
                         <div class="description">
                             @item.Description
-                        </div>                        
+                        </div>
                     </div>
                     <div class="price">
-                            @item.Price
-                        </div>
-                    
-                </a>             
+                        @item.Price
+                    </div>
+
+                </a>
             </div>
         }
     </div>
