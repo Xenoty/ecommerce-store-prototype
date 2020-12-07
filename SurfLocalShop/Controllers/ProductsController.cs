@@ -52,8 +52,11 @@ namespace SurfLocalShop.Controllers
 
             if (!String.IsNullOrEmpty(category))
             {
-                products = products.Where(p => p.Category.Name == category);
-                viewModel.Category = category;
+                if (!category.Contains("Index"))
+                {
+                    products = products.Where(p => p.Category.Name == category);
+                    viewModel.Category = category;
+                }         
             }
 
             //sort the results
