@@ -20,7 +20,7 @@ namespace SurfLocalShop.Controllers
 
         // GET: Products
         [AllowAnonymous]
-        public ActionResult Index(string category, string search, string sortBy, int? page)
+        public ActionResult Index(string category, string search, string sortBy, int? page, string filter)
         {
             //instantiate a new view model
             ProductIndexViewModel viewModel = new ProductIndexViewModel();
@@ -49,6 +49,12 @@ namespace SurfLocalShop.Controllers
                                           CategoryName = catGroup.Key,
                                           ProductCount = catGroup.Count()
                                       };
+
+            //if (filter == "Clear")
+            //{
+            //    category = null;
+            //    sortBy = null;
+            //}
 
             if (!String.IsNullOrEmpty(category))
             {
