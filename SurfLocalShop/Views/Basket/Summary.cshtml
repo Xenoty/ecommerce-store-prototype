@@ -1,8 +1,26 @@
 ﻿@model SurfLocalShop.ViewModels.BasketSummaryViewModel
 
+<style>
+    .nav-icon{
+        max-width: 19px !important;
+     /*   width:100%;      */
+    }
+
+    .cart-items {
+        float: right;
+        margin-left: 1rem;
+    }
+</style>
+
 <ul class="nav navbar-nav navbar-right">
     <li>
-        @Html.ActionLink("Basket: ( " + Model.NumberOfItems + " ) " +
-            HttpUtility.HtmlDecode(Html.DisplayFor(model => Model.TotalCost).ToString()), "Index", "Basket")
+        <a href="@Url.Action("Index", "Basket")">
+            <img src="~/Content/icons/shopping-cart.svg" class="nav-icon"/>  
+            <div class="cart-items">
+                ( @Model.NumberOfItems )  @HttpUtility.HtmlDecode(Html.DisplayFor(model => Model.TotalCost).ToString())
+            </div>
+        </a>
+        @*@Html.ActionLink("Basket: ( " + Model.NumberOfItems + " ) " +
+            HttpUtility.HtmlDecode(Html.DisplayFor(model => Model.TotalCost).ToString()), "Index", "Basket")*@
     </li>
 </ul>
