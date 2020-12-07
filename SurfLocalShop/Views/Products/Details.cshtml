@@ -1,81 +1,249 @@
 ﻿@model SurfLocalShop.Models.Product
 
 @{
-    ViewBag.Title = "Product Details";
+    ViewBag.Title = Model.Name;
 }
 
-<h2>@ViewBag.Title</h2>
+@*<h2>@ViewBag.Title</h2>*@
 
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Category.Name)
-        </dt>
+<style>
+    body {
+        background-color: #F9F9F9 !important;
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.Category.Name)
-        </dd>
+    .details-wrapper {
+        margin-top: 5vh;
+    }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+    .details-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        grid-column-gap: 7rem;
+        grid-row-gap: 2rem;
+        margin-bottom: 2rem;
+     
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+    .product-image {
+        background-color: white;
+    }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+        .product-image img {
+            max-width: 150px;
+            width: 100%;
+            display: block;
+            margin: auto;
+        }
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+    .product-info {
+        height: fit-content;
+        position: relative;
+        background-color: white;
+    }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
+        .product-info .content {
+            padding: 3rem 5rem;
+        }
 
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        @if (Model.ProductImageMappings != null && Model.ProductImageMappings.Any())
-        {
-            <dt></dt>
-            <dd>
+        .product-info * {
+            color: var(--grey);
+        }
+
+        .product-info .name {
+            font-family: Poppins-SemiBold;
+            font-size: 20px;
+        }
+
+        .product-info .descr {
+            font-size: 15px;
+        }
+
+        .product-info .price {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            color: var(--primary);
+            font-family: Poppins-SemiBold;
+            font-size: 25px;
+        }
+
+        .product-info .action {
+            border-top: 1px solid #D6D6D6;
+            padding: 2rem;
+        }
+
+            .product-info .action a {
+                width: fit-content;
+                padding: 8px 1rem;
+                cursor: pointer;
+                background-color: var(--primary);
+                color: white;
+                font-size: 16px;
+            }
+
+            .product-info .action input[type=submit] {
+                background-color: var(--primary);
+                color: white;
+                font-size: 16px;
+                border: none;
+                padding: 3px 2rem;
+                transition: background-color 0.2s ease;
+            }
+
+            .product-info .action input[type=submit]:hover {
+                background-color: var(--primaryDarker);
+            }
+
+    .admin{
+        display:block;  
+    }
+
+    .admin a{
+        margin-left: 1rem;
+    }
+</style>
+
+
+<div class="details-wrapper">
+    <a href="@Url.Action("Index", "Products")" class="back-arrow">
+        <img src="~/Content/icons/arrow_back.svg" />
+    </a>
+    <div class="details-grid">
+        <div class="product-image box-shadow">
+            @if (Model.ProductImageMappings != null && Model.ProductImageMappings.Any())
+            {
+
                 <img src="@(Url.Content(Constants.ProductImagePath) + Model.ProductImageMappings.OrderBy(pim =>	pim.ImageNumber).ElementAt(0).ProductImage.FileName)" style=padding:5px>
-            </dd>
-            <dt></dt>
-            <dd>
-                @foreach (var item in Model.ProductImageMappings.OrderBy(pim => pim.ImageNumber))
-                {
-                    <a href="@(Url.Content(Constants.ProductImagePath) + item.ProductImage.FileName)">
-                        <img src="@(Url.Content(Constants.ProductThumbnailPath) + item.ProductImage.FileName)" style=padding:5px>
+            }
+        </div>
+        <div class="product-info box-shadow">
+            @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                <div class="admin">
+                    <a href="@Url.Action("Edit", "Products", new { id = Model.ID})">
+                        <svg id="edit" xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 27.067 27.067" class="admin-icon">
+                            <g id="Group_29" data-name="Group 29" transform="translate(0 1.933)">
+                                <g id="Group_28" data-name="Group 28">
+                                    <path id="Path_101" data-name="Path 101" d="M22.233,45.737a.967.967,0,0,0-.967.967V56.37a.967.967,0,0,1-.967.967H2.9a.967.967,0,0,1-.967-.967V37.037A.967.967,0,0,1,2.9,36.07H14.5a.967.967,0,1,0,0-1.933H2.9a2.9,2.9,0,0,0-2.9,2.9V56.37a2.9,2.9,0,0,0,2.9,2.9H20.3a2.9,2.9,0,0,0,2.9-2.9V46.7A.967.967,0,0,0,22.233,45.737Z" transform="translate(0 -34.137)" fill="#d1dbff" />
+                                </g>
+                            </g>
+                            <g id="Group_31" data-name="Group 31" transform="translate(5.8)">
+                                <g id="Group_30" data-name="Group 30">
+                                    <path id="Path_102" data-name="Path 102" d="M122.591,1.088a3.7,3.7,0,0,0-5.234,0L104.625,13.82a.977.977,0,0,0-.233.378L102.458,20a.967.967,0,0,0,.916,1.272.982.982,0,0,0,.305-.049l5.8-1.933a.967.967,0,0,0,.378-.234L122.591,6.321A3.7,3.7,0,0,0,122.591,1.088Z" transform="translate(-102.409 -0.004)" fill="#d1dbff" />
+                                </g>
+                            </g>
+                        </svg>
                     </a>
+                    <a href="@Url.Action("Delete", "Products", new { id = Model.ID})">
+                        <svg id="trash-can" xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 20.968 31.039" class="admin-icon">
+                            <g transform="translate(-83.057)">
+                                <path id="XMLID_1089_" d="M103.988,93.243l-.677-2.029a1,1,0,0,0-.949-.684H84.72a1,1,0,0,0-.949.684l-.677,2.029a.71.71,0,0,0,.673.934h19.548A.71.71,0,0,0,103.988,93.243Z" transform="translate(0 -85.043)" fill="#ffd1d1" />
+                                <path id="XMLID_835_" d="M103.145,199.548a1.379,1.379,0,0,0,1.37,1.227h11.744a1.379,1.379,0,0,0,1.37-1.227l2.1-18.858H101.05Z" transform="translate(-16.902 -169.736)" fill="#ffd1d1" />
+                                <path id="XMLID_831_" d="M197.709,2.607a.789.789,0,0,1,.788-.788h2.679a.789.789,0,0,1,.788.788V3.67h1.819V2.607A2.61,2.61,0,0,0,201.175,0H198.5a2.61,2.61,0,0,0-2.607,2.607V3.67h1.819Z" transform="translate(-105.993)" fill="#ffd1d1" />
+                            </g>
+                        </svg>
+                    </a>
+
+                </div>
+            }
+            <div class="price">
+                @Model.Price
+            </div>
+            <div class="content">
+                <div class="name">
+                    @Model.Name
+                </div>
+                <hr />
+                <div class="descr">
+                    @Model.Description
+                </div>
+            </div>
+
+            <div class="action">
+                @using (Html.BeginForm("AddToBasket", "Basket", FormMethod.Post, new { style = "width: fit-content;margin:auto;" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.ID)
+                    @Html.DropDownList("quantity", Enumerable.Range(1, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))
+                    <input type="submit" class="btn btn-primary btn-xs" value="Add to Cart">
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="thubmnail-grid">
+    @foreach (var item in Model.ProductImageMappings.OrderBy(pim => pim.ImageNumber))
+    {
+        <a href="@(Url.Content(Constants.ProductImagePath) + item.ProductImage.FileName)">
+            <img src="@(Url.Content(Constants.ProductThumbnailPath) + item.ProductImage.FileName)" style=padding:5px>
+        </a>
+    }
+</div>
+
+@*<div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Category.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Category.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+            @if (Model.ProductImageMappings != null && Model.ProductImageMappings.Any())
+            {
+                <dt></dt>
+                <dd>
+                    <img src="@(Url.Content(Constants.ProductImagePath) + Model.ProductImageMappings.OrderBy(pim =>	pim.ImageNumber).ElementAt(0).ProductImage.FileName)" style=padding:5px>
+                </dd>
+                <dt></dt>
+                <dd>
+                    @foreach (var item in Model.ProductImageMappings.OrderBy(pim => pim.ImageNumber))
+                    {
+                        <a href="@(Url.Content(Constants.ProductImagePath) + item.ProductImage.FileName)">
+                            <img src="@(Url.Content(Constants.ProductThumbnailPath) + item.ProductImage.FileName)" style=padding:5px>
+                        </a>
+                    }
+                </dd>
+            }
+            <dt>
+                Quantity:
+            </dt>
+            <dd>
+                @using (Html.BeginForm("AddToBasket", "Basket"))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.ID)
+                    @Html.DropDownList("quantity", Enumerable.Range(1, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))
+                    <input type="submit" class="btn btn-primary btn-xs" value="Add to Basket">
                 }
             </dd>
-        }
-        <dt>
-            Quantity:
-        </dt>
-        <dd>
-            @using (Html.BeginForm("AddToBasket", "Basket"))
-            {
-                @Html.AntiForgeryToken()
-                @Html.HiddenFor(model => model.ID)
-                @Html.DropDownList("quantity", Enumerable.Range(1, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))
-                <input type="submit" class="btn btn-primary btn-xs" value="Add to Basket">
-            }
-        </dd>
 
-    </dl>
-</div>
-<p>
-    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
-    {
-        @Html.ActionLink("Edit", "Edit", new { id = Model.ID })
-        @Html.Raw(" | ")
-    }
-    @Html.ActionLink("Back to List", "Index")
-</p>
+        </dl>
+    </div>*@
+

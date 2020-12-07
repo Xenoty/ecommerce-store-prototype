@@ -5,7 +5,7 @@ namespace SurfLocalShop
     {
         public const string ProductImagePath = "~/Content/ProductImages/";
         public const string ProductThumbnailPath = "~/Content/ProductImages/Thumbnails/";
-        public const int PageItems = 3;
+        public const int PageItems = 10;
         public const int NumberOfProductImages = 5;
     }
 }

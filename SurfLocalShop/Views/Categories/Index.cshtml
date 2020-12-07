@@ -4,36 +4,166 @@
     ViewBag.Title = "Categories";
 }
 
-<h2>@ViewBag.Title</h2>
+<style>
+    h2 {
+        text-align: center;
+        color: var(--primary);
+        margin-bottom: 5vh;
+        margin-top: 5vh;
+        font-size: 2.3rem;
+    }
+
+    .categories-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 200px));
+        grid-gap: 3rem;
+    }
+
+    .category-item {
+        position: relative;
+        background-color: var(--primary);
+        padding: 3rem 2rem;
+        text-align: center;
+    }
+
+
+
+    .category-item a {
+        text-align: center;
+        color: white;
+        font-size: 20px;
+    }
+
+    .category-help{
+        margin-top:10vh;
+    }
+
+    .category-help h2{
+        margin-bottom: 1vh;
+        color:#707070;
+    }
+
+    .help-container {
+        height: 350px;
+        width: 100%;
+        position: relative;
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+            url(/Content/Marketing/images/carrying_surfboards.jpg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+
+    .text-center {
+        margin-bottom: 3vh;
+        color: white;
+        font-size: 1.8rem;
+    }
+
+    .absolute-center {
+        text-align: center;
+    }
+
+    .admin {
+        display: block;
+        overflow: auto;
+        text-align: center;
+        margin-top: 1rem;
+    }
+
+    svg{
+        max-width: 19px;
+    }
+
+    svg path{
+        fill:white;
+    }
+
+    #edit:hover path{
+        fill:green;
+    }
+
+    #trash-can{
+        max-width:15px;
+    }
+
+    #trash-can:hover path {
+        fill: red;
+    }
+
+    .admin a{
+        text-decoration:none;
+    }
+
+</style>
+
+<h2>Looking for something? We got you covered.</h2>
 
 @if (Request.IsAuthenticated && User.IsInRole("Admin"))
 {
     <p>
-        @Html.ActionLink("Create New", "Create")
+        @Html.ActionLink("Create New Category", "Create", "Categories", null, new { @class = "btn btn-success"})
     </p>
 }
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink(item.Name, "Index", "Products", new { category = item.Name }, null)
-        </td>
-        <td>
-            @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+<div class="grid-wrapper">
+    <div class="categories-grid">
+     
+            @foreach (var item in Model)
             {
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID })
-                @Html.Raw(" | ")
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-            }
-        </td>
-    </tr>
-}
+                <div class="category-item">
+               
+                <a href="@Url.Action("Index", "Products", new { category = item.Name }, null)">
+                    @item.Name
+                </a>
 
-</table>
+                    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <div class="admin">
+                            @*@Html.ActionLink("Edit", "Edit", new { id = item.ID })
+                            @Html.Raw(" | ")
+                            @Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
+                            <a href="@Url.Action("", "Edit", new { id = item.ID})">
+                                <svg id="edit" xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 27.067 27.067">
+                                    <g id="Group_29" data-name="Group 29" transform="translate(0 1.933)">
+                                        <g id="Group_28" data-name="Group 28">
+                                            <path id="Path_101" data-name="Path 101" d="M22.233,45.737a.967.967,0,0,0-.967.967V56.37a.967.967,0,0,1-.967.967H2.9a.967.967,0,0,1-.967-.967V37.037A.967.967,0,0,1,2.9,36.07H14.5a.967.967,0,1,0,0-1.933H2.9a2.9,2.9,0,0,0-2.9,2.9V56.37a2.9,2.9,0,0,0,2.9,2.9H20.3a2.9,2.9,0,0,0,2.9-2.9V46.7A.967.967,0,0,0,22.233,45.737Z" transform="translate(0 -34.137)" fill="#d1dbff" />
+                                        </g>
+                                    </g>
+                                    <g id="Group_31" data-name="Group 31" transform="translate(5.8)">
+                                        <g id="Group_30" data-name="Group 30">
+                                            <path id="Path_102" data-name="Path 102" d="M122.591,1.088a3.7,3.7,0,0,0-5.234,0L104.625,13.82a.977.977,0,0,0-.233.378L102.458,20a.967.967,0,0,0,.916,1.272.982.982,0,0,0,.305-.049l5.8-1.933a.967.967,0,0,0,.378-.234L122.591,6.321A3.7,3.7,0,0,0,122.591,1.088Z" transform="translate(-102.409 -0.004)" fill="#d1dbff" />
+                                        </g>
+                                    </g>
+                                </svg>
+                            </a>
+                            <a href="@Url.Action("", "Delete", new { id = item.ID})">
+                                <svg id="trash-can" xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 20.968 31.039">
+                                    <g transform="translate(-83.057)">
+                                        <path id="XMLID_1089_" d="M103.988,93.243l-.677-2.029a1,1,0,0,0-.949-.684H84.72a1,1,0,0,0-.949.684l-.677,2.029a.71.71,0,0,0,.673.934h19.548A.71.71,0,0,0,103.988,93.243Z" transform="translate(0 -85.043)" fill="#ffd1d1" />
+                                        <path id="XMLID_835_" d="M103.145,199.548a1.379,1.379,0,0,0,1.37,1.227h11.744a1.379,1.379,0,0,0,1.37-1.227l2.1-18.858H101.05Z" transform="translate(-16.902 -169.736)" fill="#ffd1d1" />
+                                        <path id="XMLID_831_" d="M197.709,2.607a.789.789,0,0,1,.788-.788h2.679a.789.789,0,0,1,.788.788V3.67h1.819V2.607A2.61,2.61,0,0,0,201.175,0H198.5a2.61,2.61,0,0,0-2.607,2.607V3.67h1.819Z" transform="translate(-105.993)" fill="#ffd1d1" />
+                                    </g>
+                                </svg>
+                            </a>
+
+                        </div>
+                    }
+            </div>
+            }
+      
+    </div>
+</div>
+
+<div class="category-help">
+    <h2>Couldn't find what you are looking for?</h2>
+
+    <div class="help-container">
+        <div class="absolute-center">
+            <p class="text-center">Try looking for it in our shop, or <br /> giving us a call +27 12 345 6789</p>
+            <a href="@Url.Action("Index","Products")" class="cta box-shadow">Shop Now</a>
+        </div>
+    </div>
+</div>
+

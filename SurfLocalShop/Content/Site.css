@@ -1,4 +1,28 @@
-﻿body {
+﻿@font-face {
+    font-family: Poppins-Regular;
+    src: url('/fonts/Poppins-Regular.ttf');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: Poppins-SemiBold;
+    src: url('/fonts/Poppins-SemiBold.ttf');
+    font-display: swap;
+}
+
+:root {
+    --primary: #3AAB98;
+    --secondary: #7A97FF;
+    --grey: #707070;
+    --primaryDarker: #2f8a7b;
+}
+
+* {
+    font-family: Poppins-Regular;
+}
+
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -21,4 +45,74 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+.fullscreen{
+   width:100vw;
+   height:100vh;
+}
+
+.cta {
+    background-color: var(--primary);
+    color: white;
+    font-size: 26px;
+    padding: 1rem 4rem;
+    cursor: pointer;
+    display:block;
+}
+
+.box-shadow {
+    box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.2);
+}
+
+.absolute-center{
+    position:absolute;
+    left:50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.back-arrow {
+    text-align: left;
+    display: block;
+    margin-bottom: 2rem;
+}
+
+.back-arrow img{
+    max-width: 40px;
+    width:100%;
+    margin:auto;
+}
+
+.admin {
+    overflow: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.admin-icon {
+    max-width: 19px;
+}
+
+.admin-icon path {
+    fill: var(--grey);
+}
+
+#edit:hover path {
+    fill: green;
+}
+
+#trash-can {
+    max-width: 15px;
+}
+
+    #trash-can:hover path {
+        fill: red;
+    }
+
+.admin a {
+    text-decoration: none;
 }

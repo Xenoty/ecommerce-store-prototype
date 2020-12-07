@@ -4,14 +4,88 @@
     ViewBag.Title = "Your Basket";
 }
 
+<style>
+    .remove-feature {
+        /*background-color: #afafaf;*/
+        color: red;
+        padding: 2px 10px;
+        border-radius: 5px;
+    }
+
+    .primary-overide {
+        background-color: var(--primary);
+        border: none;
+        font-size: 15px;
+    }
+
+    h2 {
+        text-align: center;
+        color: var(--primary);
+        /* margin-bottom: 5vh; */
+        margin-top: 5vh;
+        font-size: 2.3rem;
+    }
+
+    .product-item a {
+        width: 100%;
+        display: block;
+    }
+
+    .product-item img {
+        width: 100%;
+        max-width: 60px;
+        margin: auto;
+        display: block;
+    }
+
+    .basket-total * {
+        font-size: 18px;
+        color: white;
+    }
+
+    .basket-total {
+        padding: 2rem 0pc;
+        background-color: var(--primary);
+        line-height: 36px;
+    }
+
+    .order-now{
+        background-color: white;
+        padding: 5px 10px;
+        color: var(--primary) !important;
+        border-radius: 4px;
+        border:none;
+        transition: background-color 0.2s ease;
+    }
+
+    .order-now:hover {
+        background-color: var(--primaryDarker);
+        color:white !important;
+    }
+
+    .update-feature{
+        overflow:auto;
+    }
+
+    .update-feature input{
+        float:right;
+    }
+</style>
+
 <h2>@ViewBag.Title</h2>
+
+
+
 @if (Model.BasketLines.Count() > 0)
 {
     <div>
-        @using (Html.BeginForm("UpdateBasket", "Basket"))
+        @using (Html.BeginForm("UpdateBasket", "Basket", FormMethod.Post, new {style ="margin-bottom:2rem;"}))
         {
             @Html.AntiForgeryToken();
-            <input class="btn btn-sm btn-success" type="submit" value="Update Basket" />
+            <div class="update-feature">
+                <input class="btn btn-sm btn-success" type="submit" value="Update Basket" />
+            </div>
+       
             <hr />
             <div class="row">
                 <div class="col-md-4"><label>Item</label></div>
@@ -23,15 +97,22 @@
             for (int i = 0; i < Model.BasketLines.Count; i++)
             {
             <div class="row">
-                <div class="col-md-4">
-                    @Html.ActionLink(Model.BasketLines[i].Product.Name, "Details", "Products", new { id = Model.BasketLines[i].ProductID }, null)<br />
-                    @if (Model.BasketLines[i].Product.ProductImageMappings != null && Model.BasketLines[i].Product.ProductImageMappings.Any())
-                    {
-                        <a href="@Url.Action("Details", "Products", new { id = Model.BasketLines[i].ProductID })">
-                            <img src="@(Url.Content(Constants.ProductThumbnailPath) + 
+                <div class="col-md-4 product-item">
+                    @*@Html.ActionLink(Model.BasketLines[i].Product.Name, "Details", "Products", new { id = Model.BasketLines[i].ProductID }, null)*@
+                    <div class="product-name">
+                        @Model.BasketLines[i].Product.Name
+                    </div>
+                   
+                    <a href="@Url.Action("Details", "Products", new {id = Model.BasketLines[i].ProductID})">
+                        <br />
+                        @if (Model.BasketLines[i].Product.ProductImageMappings != null && Model.BasketLines[i].Product.ProductImageMappings.Any())
+                        {
+                            
+                            <img src="@(Url.Content(Constants.ProductThumbnailPath) +
                                 Model.BasketLines[i].Product.ProductImageMappings.OrderBy(pim => pim.ImageNumber).ElementAt(0).ProductImage.FileName)">
-                        </a>
-                    }
+                          
+                        }
+                    </a>
                 </div>
                 <div class="col-md-3">
                     @Html.HiddenFor(productID => Model.BasketLines[i].ProductID)
@@ -47,21 +128,21 @@
                     @((Model.BasketLines[i].Quantity * Model.BasketLines[i].Product.Price).ToString("c"))
                 </div>
                 <div class="col-md-1">
-                    @Html.ActionLink("Remove", "RemoveLine", "Basket", new { id = Model.BasketLines[i].Product.ID }, null)
+                    <a href="@Url.Action("RemoveLine", "Basket",new { id = Model.BasketLines[i].Product.ID })" class="remove-feature">&#10005;</a>
                 </div>
             </div>
             <hr />
             }
         }
-        <div class="row">
-            <div class="col-md-8">
+        <div class="row basket-total">
+            <div class="col-md-8" style="text-align:center">
                 @Html.DisplayNameFor(model => model.TotalCost)
             </div>
             <div class="col-md-1">
                 @Html.DisplayFor(model => model.TotalCost)
             </div>
             <div class="col-md-1">
-                @Html.ActionLink("Order Now", "Review", "Orders", null, new { @class = "btn btn-sm btn-success" })
+                @Html.ActionLink("Order Now", "Review", "Orders", null, new { @class = "btn btn-success order-now" })
             </div>
         </div>
     </div>
@@ -70,7 +151,8 @@ else
 {
     <p>Your Basket is empty</p>
 }
-<div>
+
+<div style="margin-bottom: 1rem; margin-top: 1rem;">
     @Html.ActionLink("Continue Shopping", "Index", "Products")
 </div>
 
