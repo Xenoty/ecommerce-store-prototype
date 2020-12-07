@@ -42,7 +42,14 @@
 </head>
 
 <body>
-
+    <style>
+        .logo-small {
+            padding-top: 6px;
+        }
+        .logo-small img {
+            max-width: 33px;
+        }
+    </style>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -51,6 +58,9 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+                <a href="@Url.Action("Index", "Home")" class="navbar-brand logo-small">
+                    <img src="~/Content/icons/logo-white.svg" />
+                </a>
                 @Html.ActionLink("Surf Local", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
