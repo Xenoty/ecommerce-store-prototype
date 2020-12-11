@@ -135,6 +135,21 @@ namespace SurfLocalShop.Controllers
             return View();
         }
 
+        // GET: Products/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ProductImage productImage = db.ProductImages.Find(id);
+            if (productImage == null)
+            {
+                return HttpNotFound();
+            }
+            return View(productImage);
+        }
+
         // POST: ProductImages/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
