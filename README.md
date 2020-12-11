@@ -25,6 +25,10 @@ The website is curated according to the requirements of AMCE INC, which wanted t
 - An employee shall be able to view the number of orders in each product category over time
 - Include sameple data for prototype
 
+## Login Details for Admin
+email: admin@surflocal.com
+password: Password1
+
 ## How to run Project
 ### Requirements
 -	Visual Studio 2019 Community Edition (v.16.7.2)
