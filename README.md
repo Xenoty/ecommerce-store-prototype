@@ -27,6 +27,7 @@ The website is curated according to the requirements of AMCE INC, which wanted t
 
 ## Login Details for Admin
 email: admin@surflocal.com
+
 password: Password1
 
 ## How to run Project
