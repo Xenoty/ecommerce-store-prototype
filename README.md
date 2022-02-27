@@ -1,6 +1,8 @@
 README
 # E-commerce Store Prototype
 
+![Ecommerce Store - Landing Page](https://user-images.githubusercontent.com/60667206/155889041-0b206369-920a-4ff4-bb8a-d956b0e81f31.png)
+
 1. [Surf Local Overview](#surf-local-overview)
     1. [Key Notes](#key-notes)
     2. [Tech Stack](#tech-stack)
@@ -67,18 +69,25 @@ The following tech stack was utilized:
 
 ### Issues and Solutions
 
-**1. Project file has been unloaded.**
+**1. Could not find path for 'roslyn\csc.exe'**
+
+*   In the Solution Explorer, right-click on Solution 'SurfLocalShop'.
+*   Select 'Clean Solution'.
+*   Perform step 1 again, and select 'Rebuild Solution'.
+*   Click the green arrow to run the project.
+
+**2. Project file has been unloaded.**
 
 *	In the Solution Explorer, right-click the missing project and select 'Reload Project'.
 
-**2. Project file has been removed.**
+**4. Project file has been removed.**
 
 *   Right-click the Solution and select 'Add' -> 'Existing Project'.
 *   Navitgate to the cloned project to the following directory '[yourpath]\ecommerce-store-prototype\SurfLocalShop\'.
 *   Find the LibraryDeweyApp.csproj file, and click 'Open'.
 *   Click the green arrow to run the project.
 
-**3. Asp.Net version is not supported.**
+**4. Asp.Net version is not supported.**
 
 *	Right-click 'SurfLocalShop' project in the Solution Explorer and select 'Properties'.
 *	In the left menu, make sure 'Applicaiton' is selected
